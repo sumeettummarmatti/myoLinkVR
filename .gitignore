@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS specific
+.DS_Store
+.postman_history.json
+
+# Data (Excluded as requested)
+data/
+*.csv
+*.dat
+*.npy
+*.txt
+
+# Virtual Env
+venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Brain/Artifacts (Created by agent)
+.gemini/
