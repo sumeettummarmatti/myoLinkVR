@@ -27,5 +27,3 @@ env/
 .vscode/
 .idea/
 
-# Brain/Artifacts (Created by agent)
-.gemini/
