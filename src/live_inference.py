@@ -93,15 +93,30 @@ def main():
                 # Real Serial Read
                 try:
                     line = ser.readline().decode('utf-8', errors='ignore').strip()
+                    if args.verbose and line:
+                        print(f"RAW: {line}")
+                        
+                    val = None
+                    # Format 1: "Emg signals: 123" (Bluetooth)
                     if "Emg signals:" in line:
-                        val_str = line.split(":")[1].strip()
-                        if val_str.isdigit():
-                            val = float(val_str)
-                            # Duplicate to all channels
-                            row = np.full((1, MODEL_CHANNELS), val)
-                            new_data = row
+                        parts = line.split(":")
+                        if len(parts) > 1:
+                            val_str = parts[1].strip()
+                            if val_str.isdigit():
+                                val = float(val_str)
+                    
+                    # Format 2: "123" (USB Serial)
+                    elif line.isdigit():
+                        val = float(line)
+                        
+                    if val is not None:
+                        # Duplicate to all channels
+                        row = np.full((1, MODEL_CHANNELS), val)
+                        new_data = row
+                        
                 except Exception as e:
-                    pass
+                    if args.verbose:
+                        print(f"Read Error: {e}")
 
             # --- Update Buffer ---
             if new_data is not None:
